@@ -43,10 +43,10 @@ let store = {
 
 	},
 	//addScore: (quizTaker, quizId, score, date)
-	addScore: (quizTaker, quizId, score) =>{
+	addScore: (quizTaker, quizName, score) =>{
 		console.log("In addScore()");
 		//scores.push({quizTaker: quizTaker, quizId: quizId, score: score, date:date});
-		scores.push({quizTaker: quizTaker, quizId: quizId, score: score});
+		scores.push({quizTaker: quizTaker, quizName: quizName, score: score});
 		console.log(scores);
 	},
 
