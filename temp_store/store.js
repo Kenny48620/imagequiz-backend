@@ -63,7 +63,7 @@ let store = {
 		console.log("In findScore()")
 		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase() );
 //		score = [100];
-
+		console.log(taker)
 		if (taker){
 			return {done: true, score: taker.scores, message:"Got the score successfully!"};
 		}else{
