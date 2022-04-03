@@ -51,6 +51,7 @@ let store = {
 		console.log("==========")
 
 		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase());
+		console.log("Taker"+taker)
 		if (taker){
 			taker.scores.push(score);
 		}else{
