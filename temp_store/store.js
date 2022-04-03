@@ -54,7 +54,7 @@ let store = {
 		if (taker){
 			taker.scores.push(score);
 		}else{
-			let scoreArray = new Array(score);
+			let scoreArray = [score];
 			scores.push({quizTaker: quizTaker, quizName: quizName, scroes:scoreArray});
 
 		}
