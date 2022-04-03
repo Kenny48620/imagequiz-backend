@@ -4,7 +4,6 @@ let {quizzes}   = require('./data');
 let {scores}	= require('./scores')
 
 
-
 let store = {
 
 	addCustomer: (name, email, password) =>{	
@@ -45,7 +44,12 @@ let store = {
 	//addScore: (quizTaker, quizId, score, date)
 	addScore: (quizTaker, quizName, score) =>{
 		console.log("In addScore()");
-
+		console.log("==========")
+		console.log(quizTaker)
+		console.log(quizName)
+		console.log(score)
+		console.log("==========")
+		
 		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase());
 		if (taker){
 			taker.scores.push(score);
@@ -70,7 +74,6 @@ let store = {
 		}
 	}
 }
-
 
 
 module.exports = { store }
