@@ -3,7 +3,8 @@ const {store} = require('./temp_store/store');
 const flowers = require('./temp_store/flowers');
 
 const application = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
+//const port = 4000;
 
 
 //middlewares
