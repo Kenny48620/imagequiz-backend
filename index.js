@@ -34,6 +34,9 @@ application.post('/login', (request, response) => {
 	let password = request.body.password;
 
 	let result   = store.login(name, email, password);
+
+	console.log("In Login")
+
 	if (result.valid){
 		response.status(200).json({done: true, message:result.message});
 	}else{
