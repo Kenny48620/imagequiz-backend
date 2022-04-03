@@ -65,18 +65,17 @@ application.post('/score', (request, response) => {
 	//var today = new Date();
 	//console.log(today)
 	console.log("i====n post====")
-//	let quizTaker = request.body.quizTaker;
+	let quizTaker = request.body.quizTaker;
 	//let quizId	  = request.body.quizId;
-//	let quizName = request.body.quizName;
-//	let score 	  = request.body.score;
+	let quizName = request.body.quizName;
+	let score 	  = request.body.score;
 	//let date 	  = request.body.date;
 
 	console.log(request.body)
 
 //	store.addScore(quizTaker, quizId, score, date)
-//	store.addScore(quizTaker, quizName, score)
-//	response.status(200).json({done: true, message: 'The score was added successfully!'});
-	response.status(200).json({done: true, message:'Fine!'});
+	store.addScore(quizTaker, quizName, score)
+	response.status(200).json({done: true, message: 'The score was added successfully!'});
 })
 
 application.get('/scores/:quiztaker/:quizname', (request, response) => {
@@ -84,8 +83,6 @@ application.get('/scores/:quiztaker/:quizname', (request, response) => {
 	let quizName    = request.params.quizname;
 
 	let result    = store.findScore(quizTaker, quizName);
-
-	
 	if (result.done){
 		response.status(200).json({done: true, result:result.score, message: result.message});
 	}else{
