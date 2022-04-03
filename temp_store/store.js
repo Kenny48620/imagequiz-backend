@@ -45,6 +45,7 @@ let store = {
 	addScore: (quizTaker, quizName, score) =>{
 		console.log("In addScore()");
 		console.log("==========")
+		console.log(scores)
 		console.log(quizTaker)
 		console.log(quizName)
 		console.log(score)
@@ -70,9 +71,9 @@ let store = {
 		console.log("In findScore()")
 		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase() );
 		console.log(taker)
-		console.log("Return obj:"+taker.scroes)
+		console.log("Return obj:"+taker.scores)
 		if (taker){
-			return {done: true, score: taker.scroes, message:"Got the score successfully!"};
+			return {done: true, score: taker.scores, message:"Got the score successfully!"};
 		}else{
 			return {done: false, message:"Cannot find the quizTaker and the score !"};
 		}
