@@ -46,8 +46,8 @@ application.post('/login', (request, response) => {
 
 application.get('/flowers', (request, response) => {
 	//console.log(flowers);
-	console.log("In flowers")
-	console.log(flowers)
+	//console.log("In flowers")
+	//console.log(flowers)
 	response.status(200).json({done: true, result: flowers.flowers, message:"Get the flowers successfully!"});
 
 })
@@ -68,7 +68,6 @@ application.post('/score', (request, response) => {
 	//console.log(today)
 	console.log("i====n post====")
 	let quizTaker = request.body.quizTaker;
-	//let quizId	  = request.body.quizId;
 	let quizName  = request.body.quizName;
 	let score 	  = request.body.score;
 	//let date 	  = request.body.date;

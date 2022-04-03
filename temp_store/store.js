@@ -46,14 +46,13 @@ let store = {
 	addScore: (quizTaker, quizName, score) =>{
 		console.log("In addScore()");
 
-		// let taker = scores.find(each => each.quizTaker === quizTaker)
-		// if (taker){
-		// 	let quiz = taker.
+		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase());
+		if (taker){
+			taker.scores.push(score);
+		}else{
+			scores.push({quizTaker: quizTaker, quizName: quizName, scroes:[score]});
 
-		// }else{
-			
-			
-		// }
+		}
 
 		//scores.push({quizTaker: quizTaker, quizId: quizId, score: score, date:date});
 	//	scores.push({quizTaker: quizTaker, quizName: quizName, score: score});
