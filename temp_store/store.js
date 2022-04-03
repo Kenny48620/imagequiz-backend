@@ -53,8 +53,10 @@ let store = {
 		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase());
 		console.log("Taker"+taker)
 		if (taker){
+			console.log("If"+taker)
 			taker.scores.push(score);
 		}else{
+			console.log("Else"+taker)
 			let scoreArray = [score];
 			scores.push({quizTaker: quizTaker, quizName: quizName, scroes:scoreArray});
 
