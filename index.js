@@ -61,11 +61,13 @@ application.get('/quiz/:id', (request, response) => {
 application.post('/score', (request, response) => {
 	//var today = new Date();
 	//console.log(today)
-
+	console.log("i====n post====")
 	let quizTaker = request.body.quizTaker;
 	let quizId	  = request.body.quizId;
 	let score 	  = request.body.score;
 	let date 	  = request.body.date;
+
+	console.log(request.body)
 
 	store.addScore(quizTaker, quizId, score, date)
 	response.status(200).json({done: true, message: 'The score was added successfully!'});
