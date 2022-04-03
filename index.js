@@ -12,7 +12,7 @@ application.use(express.json());
 
 
 
-// methods
+
 application.get('/', (request, response)=>{
 
 	// send the json string to client side 
