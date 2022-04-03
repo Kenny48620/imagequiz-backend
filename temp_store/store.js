@@ -58,7 +58,7 @@ let store = {
 		}else{
 			console.log("Else"+taker)
 			let scoreArray = [score];
-			scores.push({quizTaker: quizTaker, quizName: quizName, scroes:scoreArray});
+			scores.push({quizTaker: quizTaker, quizName: quizName, scores:scoreArray});
 
 		}
 
