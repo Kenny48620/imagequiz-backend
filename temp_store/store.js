@@ -43,21 +43,19 @@ let store = {
 	},
 	//addScore: (quizTaker, quizId, score, date)
 	addScore: (quizTaker, quizName, score) =>{
-		console.log("In addScore()");
-		console.log("==========")
-		console.log(scores)
-		console.log(quizTaker)
-		console.log(quizName)
-		console.log(score)
-		console.log("==========")
+		// console.log("In addScore()");
+		// console.log("==========")
+		// console.log(scores)
+		// console.log(quizTaker)
+		// console.log(quizName)
+		// console.log(score)
+		// console.log("==========")
 
 		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase());
-		console.log("Taker"+taker)
+		//console.log("Taker: "+taker)
 		if (taker){
-			console.log("If"+taker)
 			taker.scores.push(score);
 		}else{
-			console.log("Else"+taker)
 			let scoreArray = [score];
 			scores.push({quizTaker: quizTaker, quizName: quizName, scores:scoreArray});
 
@@ -68,10 +66,10 @@ let store = {
 	},
 
 	findScore: (quizTaker, quizName) =>{
-		console.log("In findScore()")
+	//	console.log("In findScore()")
 		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase() );
-		console.log(taker)
-		console.log("Return obj:"+taker.scores)
+		// console.log(taker)
+		// console.log("Return obj scores:"+taker.scores)
 		if (taker){
 			return {done: true, score: taker.scores, message:"Got the score successfully!"};
 		}else{

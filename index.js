@@ -13,7 +13,7 @@ application.use(cors());
 
 application.get('/', (request, response)=>{
 	// send the json string to client side 
-	response.status(200).json({done: true, message:'Fine!'});
+	response.status(200).json({done: true, message:'Welcome to a REST API!'});
 })
 
 
@@ -82,7 +82,7 @@ application.get('/scores/:quiztaker/:quizname', (request, response) => {
 	let quizName  = request.params.quizname;
 
 	let result    = store.findScore(quizTaker, quizName);
-	
+
 	if (result.done){
 		response.status(200).json({done: true, result:result.score, message: result.message});
 	}else{
