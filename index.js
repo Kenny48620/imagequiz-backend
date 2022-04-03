@@ -85,7 +85,7 @@ application.get('/scores/:quiztaker/:quizid', (request, response) => {
 	if (result.done){
 		response.status(200).json({done: true, result:result.score, message: result.message});
 	}else{
-		console.log(result.score)
+		//console.log(result.score)
 		response.status(404).json({done: false, result:"undefined", message: result.message});
 	}
 })
