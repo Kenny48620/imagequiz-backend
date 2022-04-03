@@ -11,6 +11,8 @@ var cors = require('cors');
 application.use(express.json());
 application.use(cors());
 
+
+// methods
 application.get('/', (request, response)=>{
 	// send the json string to client side 
 	response.status(200).json({done: true, message:'Welcome to a REST API!'});
