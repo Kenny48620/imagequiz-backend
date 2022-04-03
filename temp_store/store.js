@@ -49,12 +49,13 @@ let store = {
 		console.log(quizName)
 		console.log(score)
 		console.log("==========")
-		
+
 		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase());
 		if (taker){
 			taker.scores.push(score);
 		}else{
-			scores.push({quizTaker: quizTaker, quizName: quizName, scroes:[score]});
+			let scoreArray = new Array(score);
+			scores.push({quizTaker: quizTaker, quizName: quizName, scroes:scoreArray});
 
 		}
 
