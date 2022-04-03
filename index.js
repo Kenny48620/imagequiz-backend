@@ -82,6 +82,7 @@ application.get('/scores/:quiztaker/:quizname', (request, response) => {
 	let quizName  = request.params.quizname;
 
 	let result    = store.findScore(quizTaker, quizName);
+	
 	if (result.done){
 		response.status(200).json({done: true, result:result.score, message: result.message});
 	}else{
