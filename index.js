@@ -11,12 +11,11 @@ const port = process.env.PORT || 4000;
 application.use(express.json());
 
 
-
-
 application.get('/', (request, response)=>{
 
 	// send the json string to client side 
-	response.status(200).json({done: true, message:'Fine!'});
+//	response.status(200).json({done: true, message:'Fine!'});
+	response.status(200).json({done: true, result: flowers, message:"Get the flowers successfully!"});
 })
 
 
