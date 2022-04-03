@@ -5,17 +5,17 @@ const flowers = require('./temp_store/flowers');
 const application = express();
 const port = process.env.PORT || 4000;
 //const port = 4000;
-
+var cors = require('cors');
 
 //middlewares
 application.use(express.json());
-
+application.use(cors());
 
 application.get('/', (request, response)=>{
 
 	// send the json string to client side 
-//	response.status(200).json({done: true, message:'Fine!'});
-	response.status(200).json({done: true, result: flowers, message:"Get the flowers successfully!"});
+	response.status(200).json({done: true, message:'Fine!'});
+//	response.status(200).json({done: true, result: flowers, message:"Get the flowers successfully!"});
 })
 
 
