@@ -54,15 +54,13 @@ let store = {
 
 		}
 
-		//scores.push({quizTaker: quizTaker, quizId: quizId, score: score, date:date});
-	//	scores.push({quizTaker: quizTaker, quizName: quizName, score: score});
+		//scores.push({quizTaker: quizTaker, quizName: quizName, score: score, date:date});
 		console.log(scores);
 	},
 
 	findScore: (quizTaker, quizName) =>{
 		console.log("In findScore()")
 		let taker = scores.find(each => each.quizTaker.toLowerCase() === quizTaker.toLowerCase() && each.quizName.toLowerCase() === quizName.toLowerCase() );
-//		score = [100];
 		console.log(taker)
 		if (taker){
 			return {done: true, score: taker.scroes, message:"Got the score successfully!"};

@@ -12,10 +12,8 @@ application.use(express.json());
 application.use(cors());
 
 application.get('/', (request, response)=>{
-
 	// send the json string to client side 
 	response.status(200).json({done: true, message:'Fine!'});
-//	response.status(200).json({done: true, result: flowers, message:"Get the flowers successfully!"});
 })
 
 
@@ -66,7 +64,7 @@ application.get('/quiz/:id', (request, response) => {
 application.post('/score', (request, response) => {
 	//var today = new Date();
 	//console.log(today)
-	console.log("i====n post====")
+	console.log("In post /score")
 	let quizTaker = request.body.quizTaker;
 	let quizName  = request.body.quizName;
 	let score 	  = request.body.score;
@@ -91,8 +89,6 @@ application.get('/scores/:quiztaker/:quizname', (request, response) => {
 		response.status(404).json({done: false, result:"undefined", message: result.message});
 	}
 })
-
-
 
 
 application.listen(port, ()=>{
