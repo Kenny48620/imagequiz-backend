@@ -46,6 +46,7 @@ application.post('/login', (request, response) => {
 
 application.get('/flowers', (request, response) => {
 	//console.log(flowers);
+	console.log(flowers)
 	response.status(200).json({done: true, result: flowers, message:"Get the flowers successfully!"});
 
 })
