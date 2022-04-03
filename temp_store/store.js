@@ -65,7 +65,7 @@ let store = {
 //		score = [100];
 		console.log(taker)
 		if (taker){
-			return {done: true, score: taker.scores, message:"Got the score successfully!"};
+			return {done: true, score: taker.scroes, message:"Got the score successfully!"};
 		}else{
 			return {done: false, message:"Cannot find the quizTaker and the score !"};
 		}
