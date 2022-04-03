@@ -44,6 +44,7 @@ let store = {
 	},
 	//addScore: (quizTaker, quizId, score, date)
 	addScore: (quizTaker, quizId, score) =>{
+		console.log("In addScore()");
 		//scores.push({quizTaker: quizTaker, quizId: quizId, score: score, date:date});
 		scores.push({quizTaker: quizTaker, quizId: quizId, score: score});
 		console.log(scores);
