@@ -48,7 +48,7 @@ application.get('/flowers', (request, response) => {
 	//console.log(flowers);
 	console.log("In flowers")
 	console.log(flowers)
-	response.status(200).json({done: true, result: flowers, message:"Get the flowers successfully!"});
+	response.status(200).json({done: true, result: flowers.flowers, message:"Get the flowers successfully!"});
 
 })
 
@@ -82,7 +82,7 @@ application.post('/score', (request, response) => {
 
 application.get('/scores/:quiztaker/:quizname', (request, response) => {
 	let quizTaker = request.params.quiztaker;
-	let quizName    = request.params.quizname;
+	let quizName  = request.params.quizname;
 
 	let result    = store.findScore(quizTaker, quizName);
 	if (result.done){
