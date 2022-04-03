@@ -18,6 +18,5 @@
   "homepage": "https://github.com/Kenny48620/imagequiz-backend#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "express": "^4.17.3"
   }
 }
