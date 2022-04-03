@@ -65,11 +65,12 @@ application.post('/score', (request, response) => {
 	let quizTaker = request.body.quizTaker;
 	let quizId	  = request.body.quizId;
 	let score 	  = request.body.score;
-	let date 	  = request.body.date;
+	//let date 	  = request.body.date;
 
 	console.log(request.body)
 
-	store.addScore(quizTaker, quizId, score, date)
+//	store.addScore(quizTaker, quizId, score, date)
+	store.addScore(quizTaker, quizId, score)
 	response.status(200).json({done: true, message: 'The score was added successfully!'});
 })
 

@@ -42,9 +42,10 @@ let store = {
 
 
 	},
-
-	addScore: (quizTaker, quizId, score, date) =>{
-		scores.push({quizTaker: quizTaker, quizId: quizId, score: score, date:date});
+	//addScore: (quizTaker, quizId, score, date)
+	addScore: (quizTaker, quizId, score) =>{
+		//scores.push({quizTaker: quizTaker, quizId: quizId, score: score, date:date});
+		scores.push({quizTaker: quizTaker, quizId: quizId, score: score});
 		console.log(scores);
 	},
 
