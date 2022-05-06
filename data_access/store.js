@@ -98,8 +98,10 @@ let store = {
     addScore:(quizTaker, quizName, scores) =>{
     	
 
-    	return pool.query(`insert into image`.[quizTaker, quizName, scores])
-    		.then()
+    	// return pool.query(`insert into imagequiz.quiz`.[quizTaker, quizName, scores])
+    	// 	.then()
+        return pool.query('select * from imagequiz.flowers');
+
     },
 
     getScores: () => {
