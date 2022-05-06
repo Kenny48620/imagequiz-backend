@@ -1,100 +1,124 @@
+//dependencies
 const express = require('express');
-const {store} = require('./temp_store/store');
-const flowers = require('./temp_store/flowers');
+var cors = require('cors');
+const { store } = require('./data_access/store');
+
 
 const application = express();
-const port = process.env.PORT || 4000;
-//const port = 4000;
-var cors = require('cors');
+const port = process.env.PORT || 4000 ;
 
-//middlewares
-application.use(express.json());
+// middlewares
 application.use(cors());
+application.use(express.json());
 
 
 // methods
-application.get('/', (request, response)=>{
-	// send the json string to client side 
-	response.status(200).json({done: true, message:'Welcome to a REST API!'});
-})
-
-
-application.post('/register', (request, response) => {
-    let name     = request.body.name;
-    let email    = request.body.email;
-    let password = request.body.password;   
-   
-    store.addCustomer(name, email, password);
-    response.status(200).json({done: true, message: 'The customer was added successfully!'});
+application.get('/', (request, response) => {
+    response.status(200).json({ done: true, message: 'Hey! Welcome to hello world backend API!' });
 });
 
+// register
+application.post('/register', (request, response) => {
+    let name = request.body.name;
+    let email = request.body.email;
+    let password = request.body.password;
+    console.log("========== Test =============")
+    console.log("=========="+ name +"=============")
+    console.log("========== Test =============")
+    store.addCustomer(name, email, password)
+    .then(x => response.status(200).json({ done: true, message: 'The customer was added successfully!' }))
+    .catch(e => {
+        console.log(e);
+        response.status(500).json({done: false, message: 'The customer was not added due to an error.'});
+    });
+    
+});
+
+// login
 application.post('/login', (request, response) => {
-	let name     = request.body.name;
-	let email    = request.body.email;
-	let password = request.body.password;
+    let email = request.body.email;
+    let password = request.body.password;
+    store.login(email, password)
+    .then(x => {
+        if(x.valid) {
+            response.status(200).json({ done: true, message: 'The customer logged in successfully!' });
+        } else {
+            response.status(401).json({ done: false, message: x.message });
+        }
+    })
+    .catch(e => {
+        console.log(e);
+        response.status(500).json({done: false, message: 'Something went wrong.'});
+    });
+    
+});
 
-	let result   = store.login(name, email, password);
+// flowers
+application.get('/flowers', (request, response) =>{
+	store.getFlowers()
+	.then( x => {
+		if (x.result){
+			response.status(200).json({ done: true, result: x.result, message: 'Get the flowers successfully!' });
+		}else{
+			response.status(401).json({ done: false, message: 'Something went wrong as getting the flowers!'});	
+		}
 
-	console.log("In Login")
+	})
+	.catch(e => {
+		console.log('///////// Errors in /flowers /////////');
+		response.status(500).json({done: false, message: 'Something went wrong in getFlowers().'});
+	})
 
-	if (result.valid){
-		response.status(200).json({done: true, message:result.message});
-	}else{
-		response.status(401).json({done: false, message:result.message});
-	}
-})
+});
 
-application.get('/flowers', (request, response) => {
-	//console.log(flowers);
-	//console.log("In flowers")
-	//console.log(flowers)
-	response.status(200).json({done: true, result: flowers.flowers, message:"Get the flowers successfully!"});
-
-})
-
-application.get('/quiz/:id', (request, response) => {
-	let flowerId = request.params.id;
-	let result = store.getQuiz(flowerId);
-	if (result.done){
-		response.status(200).json({done: true, result: result.quiz});
-	}else{
-		response.status(404).json({done: false, message: result.message});
-	}
-})
+// /quiz/:id 
+application.get('/quiz/:name', (request, response) => {
+    let name = request.params.name;
+    store.getQuiz(name)
+    .then(x => {
+       if(x.id) {
+        response.status(200).json({ done: true, result: x });
+       } else {
+        response.status(404).json({ done: false, message: result.message });
+       }
+    })
+    .catch(e => {
+        console.log(e);
+        response.status(500).json({done: false, message: 'Something went wrong.'});
+    })    
+});
 
 
 application.post('/score', (request, response) => {
-	//var today = new Date();
-	//console.log(today)
-	console.log("In post /score")
-	let quizTaker = request.body.quizTaker;
-	let quizName  = request.body.quizName;
-	let score 	  = request.body.score;
-	//let date 	  = request.body.date;
+    let quizTaker = request.body.quizTaker;
+    let quizName  = request.body.quizName;
+    let scores    = request.body.scores;
 
-	console.log(request.body)
+    store.addScore(quizTaker, quizName, scores)
+    .then(x => {
 
-//	store.addScore(quizTaker, quizId, score, date)
-	store.addScore(quizTaker, quizName, score)
-	response.status(200).json({done: true, message: 'The score was added successfully!'});
-})
-
-application.get('/scores/:quiztaker/:quizname', (request, response) => {
-	let quizTaker = request.params.quiztaker;
-	let quizName  = request.params.quizname;
-
-	let result    = store.findScore(quizTaker, quizName);
-
-	if (result.done){
-		response.status(200).json({done: true, result:result.score, message: result.message});
-	}else{
-		//console.log(result.score)
-		response.status(404).json({done: false, result:"undefined", message: result.message});
-	}
-})
+    })
+    .catch(e =>{
+        console.log(e);
+        response.status(500).json({done: false, message: 'Something went wrong in post score.'});
+    })
 
 
-application.listen(port, ()=>{
-	console.log(`Listening to the port ${port}`)
 
 });
+// /scores/:quiztaker/:quizname
+application.get('/scores/:quiztaker/:quizname', (request, response) => {
+    let quizTaker = request.params.quiztaker;
+    let quizName = request.params.quizName;
+    let scores = store.getScores(quizTaker, quizName);
+    response.status(200).json({ done: true, result: scores });
+    
+});
+
+
+
+
+
+application.listen(port, () => {
+    console.log(`Listening to the port ${port} `);
+})
