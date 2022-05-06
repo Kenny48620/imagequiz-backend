@@ -107,13 +107,13 @@ application.post('/score', (request, response) => {
 
 });
 // /scores/:quiztaker/:quizname
-application.get('/scores/:quiztaker/:quizname', (request, response) => {
-    let quizTaker = request.params.quiztaker;
-    let quizName = request.params.quizName;
-    let scores = store.getScores(quizTaker, quizName);
-    response.status(200).json({ done: true, result: scores });
+// application.get('/scores/:quiztaker/:quizname', (request, response) => {
+//     let quizTaker = request.params.quiztaker;
+//     let quizName = request.params.quizName;
+//     let scores = store.getScores(quizTaker, quizName);
+//     response.status(200).json({ done: true, result: scores });
     
-});
+// });
 
 
 
