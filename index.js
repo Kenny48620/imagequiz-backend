@@ -13,7 +13,7 @@ const port = process.env.PORT || 4002;
 
 //middlewares
 app.use(cors({
-    origin: "https://kenny48620.github.io",
+    origin: "https://Kenny48620.github.io",
     credentials: true
 }));
 app.use(express.json());
