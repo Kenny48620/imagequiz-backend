@@ -1,52 +1,87 @@
 const bcrypt = require('bcrypt');
 const { Pool } = require('pg');
-const { quizzes } = require('../temp_store/data');
-var format = require('pg-format');
 require('dotenv').config();
+let { quizzes } = require('../temp_store/data');
+const flowers = require('../temp_store/flowers');
+
+const connectionString =
+    `postgres://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.DATABASEPORT}/${process.env.DATABASE}`;
 
 
-const connectionString = `postgres://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.DATABASEPORT}/${process.env.DATABASE}`;
-                       
-console.log(process.env);
 console.log(connectionString);
 const connection = {
     connectionString: process.env.DATABASE_URL ? process.env.DATABASE_URL : connectionString,
     ssl: { rejectUnauthorized: false }
 }
-
 const pool = new Pool(connection);
+
 
 let store = {
 
     addCustomer: (name, email, password) => {
         const hash = bcrypt.hashSync(password, 10);
-        return pool.query('INSERT INTO imagequiz.customer (name, email, password) VALUES ($1, $2, $3)', [name, email, hash]);
+        return pool.query('insert into imagequiz.customer (name, email, password) values ($1 , $2, $3)', [name, email, hash]);
+        //customers.push({id: 1, name: name, email: email, password: hash});
     },
 
     login: (email, password) => {
-        return pool.query('SELECT id, name, email, password FROM imagequiz.customer WHERE email = $1', [email])
+        return pool.query('select name, email, password from imagequiz.customer where email = $1', [email])
             .then(x => {
                 if (x.rows.length == 1) {
                     let valid = bcrypt.compareSync(password, x.rows[0].password);
                     if (valid) {
-                        return { valid: true, user: {id: x.rows[0].id, username: x.rows[0].email}};
+                        return { valid: true };
                     } else {
-                        return { valid: false, message: 'Credentials are not valid.' };
+                        return { valid: false, message: 'Credentials are not valid.' }
                     }
                 } else {
-                    return { valid: false, message: 'Email not found.' };
+                    return { valid: false, message: 'Email not found.' }
                 }
             });
+
     },
 
-    getQuiz: (quizName) => {
-        let query = `
-        select q1.id as quiz_id, q3.* from imagequiz.quiz as q1 
-        join imagequiz.quiz_question as q2 on q1.id = q2.quiz_id
-        join imagequiz.question q3 on q2.question_id = q3.id 
-        where lower(q1.name) = $1`;
-        return pool.query(query, [quizName.toLowerCase()])
+    getFlowers: ()=>{
+
+    	let sql = 'select * from imagequiz.flowers';
+  
+    	return pool.query(sql)
+    		.then(x =>{
+    				// if (x.rows.length == 0){
+    				// 	console.log('hit');
+    				// 	console.log('Start to loop flowers');
+    				// 	flowers.flowers.map((each, index) => {
+    				// 		//console.log('index'+index);
+    				// 		//console.log('name'+each.name);
+    				// 		let qid = index;
+    				// 		let name = each.name;
+    				// 		let picture = each.picture;
+    				// 		pool.query(`insert into imagequiz.flowers (name, picture) values ($1, $2)`, [name, picture]);
+    				// 	})
+    				// //	let sql2 = "insert into imagequiz.flowers (qid, name, picture) values (1, 'Acacia','https://habahram.blob.core.windows.net/flowers/acacia.jpg' )";
+    				// //	pool.query(sql2);
+    				// }
+
+
+    				if (x.rows.length > 0){
+    			//		console.log(x.rows.length);
+    					console.log(x.rows);
+    					return {result:x.rows};
+    				}
+    			//	console.log(flowers.flowers)
+    			//	console.log(x);
+    				
+    			
+    		});
+    },
+
+    getQuiz: (name) => {
+        let sqlQuery = `select q.id as quiz_id, q2.*  from imagequiz.quiz q join imagequiz.quiz_question qq on q.id = qq.quiz_id 
+        join imagequiz.question q2 on qq.question_id = q2.id 
+        where lower(q.name) =  $1`;
+        return pool.query(sqlQuery, [name.toLowerCase()])
             .then(x => {
+                //console.log(x);
                 let quiz = {};
                 if (x.rows.length > 0) {
                     quiz = {
@@ -59,60 +94,20 @@ let store = {
                 return quiz;
             });
     },
-    
-    
-    addScore: (quizTaker, quizName, score, date) => {
-        let idQuery = `select c.id as customer_id from imagequiz.customer c where c.email = $1`;
-        //let customer_id;
-        pool.query(idQuery, [quizTaker])
-            //getCustomerId(quizTaker)
-            .then(x => {
-                if (x.rows.length > 0) {
-                let customer_id = x.rows[0].customer_id;
-                let quizIdQuery = `select q.id as quiz_id from imagequiz.quiz q where lower(q.name) = $1`;
-                //let quiz_id;
-                pool.query(quizIdQuery, [quizName.toLowerCase()])
-                    //getQuizId(quizName)
-                    .then(y => {
-                        //if (y.rows.length > 0) {
-                        let quiz_id = y.rows[0].quiz_id;
-                        let query = `
-                                    insert into imagequiz.score (customer_id, quiz_id, date, score)
-                                    values ($1, $2, $3, $4)`;
-                        return pool.query(`insert into imagequiz.score (customer_id, quiz_id, date, score) values ($1, $2, $3, $4)`, [Number(customer_id), Number(quiz_id), date, score])
-                    })
-                    .catch(e => {
-                        console.log(e);
-                        //return undefined;
-                    })
-                } else {
-                    console.log('customer not in database');
-                    return {done: false, message: 'customer not in database'};
-                }
-            })
-            .catch(e => {
-                console.log(e);
-                return undefined;
-            })
-    }, 
 
-    getScore: (quizTaker, quizId) => {
-        let query = `
-        select s.score from imagequiz.customer c
-        join imagequiz.score s on s.customer_id = c.id
-        join imagequiz.quiz q on q.id = s.quiz_id
-        where c.email = $1 
-        and lower(q.name) = $2`;
-        return pool.query(query, [quizTaker, quizId.toLowerCase()])
-       
+    addScore:(quizTaker, quizName, scores) =>{
+    	
+
+    	// return pool.query(`insert into imagequiz.quiz`.[quizTaker, quizName, scores])
+    	// 	.then()
+        return pool.query('select * from imagequiz.flowers');
+
     },
 
-    getFlowers: () => {
-        let query = `
-        select f.name, f.picture from imagequiz.flowers f`;
-        return pool.query(query, [])
+    getScores: () => {
+        return scores;
     }
 
 }
 
-module.exports = { store };
+module.exports = { store }
