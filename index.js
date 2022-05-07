@@ -93,6 +93,8 @@ application.post('/score', (request, response) => {
     let quizTaker = request.body.quizTaker;
     let quizName  = request.body.quizName;
     let scores    = request.body.scores;
+    console.log('====== in /score =======');
+    console.log(request.body);
 
     store.addScore(quizTaker, quizName, scores)
     .then(x => {
