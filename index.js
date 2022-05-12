@@ -9,7 +9,7 @@ var SQLiteStore = require('connect-sqlite3')(session);
 const { store } = require('./data_access/store');
 
 
-const application = express();
+const app = express();
 const port = process.env.PORT || 4000 ;
 
 //middlewares
