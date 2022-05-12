@@ -14,7 +14,10 @@ application.use(express.json());
 
 // methods
 application.get('/', (request, response) => {
-    response.status(200).json({ done: true, message: 'Hey! Welcome to hello world backend API!' });
+
+    store.insertQuestion();
+ 
+    response.status(200).json({ done: true, message: 'Hey! Welcome to hello world backend API2!' });
 });
 
 // register
